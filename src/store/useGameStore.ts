@@ -5,7 +5,8 @@ import {
   PLAYER_SPEED, 
   SEGMENT_SPACING, 
   COLLISION_RADII, 
-  SELF_COLLISION_GRACE_SEGMENTS 
+  SELF_COLLISION_GRACE_SEGMENTS,
+  ACTIVE_COLLISION_GHOSTS
 } from '../game/constants';
 import { getRandomOrbPosition, getRandomSpawnPosition } from '../utils/gameUtils';
 import { AudioSystem } from '../systems/AudioSystem';
@@ -339,8 +340,11 @@ export const useGameStore = create<GameStoreState>((set, get) => ({
       return val + speedScale;
     });
 
-    // Check collision against past timelines' body segments
+    // Check collision against past timelines' body segments (only check the N most recent ones)
+    const activeGhostThreshold = Math.max(0, pastTimelines.length - ACTIVE_COLLISION_GHOSTS);
+
     for (let j = 0; j < pastTimelines.length; j++) {
+      if (j < activeGhostThreshold) continue; // Skip collision for older cycles!
       const timeline = pastTimelines[j];
       const L = timeline.length;
       if (L === 0) continue;

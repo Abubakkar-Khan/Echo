@@ -15,3 +15,7 @@ export const COLLISION_RADII = {
 // Grace segments: how many segments near the head to exclude from self-collision checks.
 // Since segments drag continuously, we exclude the first 7 segments of the neck.
 export const SELF_COLLISION_GRACE_SEGMENTS = 7;
+
+// Collision limit: only check collisions against the N most recent past loops.
+// Older runs remain on the board as harmless visual memories.
+export const ACTIVE_COLLISION_GHOSTS = 3;

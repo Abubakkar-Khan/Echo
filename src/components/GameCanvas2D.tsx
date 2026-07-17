@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import rough from 'roughjs';
 import { useGameStore } from '../store/useGameStore';
 import { useInput } from '../hooks/useInput';
-import { WORLD_WIDTH, WORLD_HEIGHT, PLAYER_SPEED, SEGMENT_SPACING, COLLISION_RADII } from '../game/constants';
+import { WORLD_WIDTH, WORLD_HEIGHT, PLAYER_SPEED, SEGMENT_SPACING, COLLISION_RADII, ACTIVE_COLLISION_GHOSTS } from '../game/constants';
 
 // Helper to convert hex strings to rgba format to support fading opacities
 function hexToRgba(hex: string, alpha: number): string {
@@ -145,7 +145,9 @@ export function GameCanvas2D() {
       const prevRoundedTick = Math.max(0, roundedTick - 1);
 
       const ghostColor = GHOST_PALETTE[j % GHOST_PALETTE.length];
-      const opacity = 0.85; // Solid opacity (no fade-away for older snakes!)
+      const activeGhostThreshold = Math.max(0, N - ACTIVE_COLLISION_GHOSTS);
+      const isActive = j >= activeGhostThreshold;
+      const opacity = isActive ? 0.85 : 0.28; // Active is solid (0.85), older passive runs are faded (0.28)
 
       // A) Draw thin dashed connector line with interpolated points
       ctx.beginPath();
