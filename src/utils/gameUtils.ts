@@ -1,4 +1,4 @@
-import { WORLD_WIDTH, WORLD_HEIGHT, GRID_SIZE } from '../game/constants';
+import { WORLD_WIDTH, WORLD_HEIGHT } from '../game/constants';
 
 /**
  * Checks if a point (x, y) is inside the rectangular world boundaries.
@@ -8,7 +8,7 @@ export function isInsideWorld(x: number, y: number): boolean {
 }
 
 /**
- * Generates a valid 2D random spawn position for the player, aligned to GRID_SIZE.
+ * Generates a valid 2D random spawn position for the player.
  */
 export function getRandomSpawnPosition(orbPosition: [number, number]): [number, number] {
   const margin = 80;
@@ -16,12 +16,8 @@ export function getRandomSpawnPosition(orbPosition: [number, number]): [number, 
   const maxAttempts = 100;
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    let x = margin + Math.random() * (WORLD_WIDTH - margin * 2);
-    let y = margin + Math.random() * (WORLD_HEIGHT - margin * 2);
-
-    // Round to nearest grid cell
-    x = Math.round(x / GRID_SIZE) * GRID_SIZE;
-    y = Math.round(y / GRID_SIZE) * GRID_SIZE;
+    const x = margin + Math.random() * (WORLD_WIDTH - margin * 2);
+    const y = margin + Math.random() * (WORLD_HEIGHT - margin * 2);
 
     const dx = x - orbPosition[0];
     const dy = y - orbPosition[1];
@@ -32,14 +28,12 @@ export function getRandomSpawnPosition(orbPosition: [number, number]): [number, 
     }
   }
 
-  // Fallback to center, aligned to grid
-  const cx = Math.round((WORLD_WIDTH / 2) / GRID_SIZE) * GRID_SIZE;
-  const cy = Math.round((WORLD_HEIGHT / 2) / GRID_SIZE) * GRID_SIZE;
-  return [cx, cy];
+  // Fallback to center
+  return [WORLD_WIDTH / 2, WORLD_HEIGHT / 2];
 }
 
 /**
- * Generates a valid 2D random orb position in the rectangular world, aligned to GRID_SIZE.
+ * Generates a valid 2D random orb position in the rectangular world.
  */
 export function getRandomOrbPosition(playerPosition: [number, number]): [number, number] {
   const margin = 80;
@@ -47,12 +41,8 @@ export function getRandomOrbPosition(playerPosition: [number, number]): [number,
   const maxAttempts = 100;
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    let x = margin + Math.random() * (WORLD_WIDTH - margin * 2);
-    let y = margin + Math.random() * (WORLD_HEIGHT - margin * 2);
-
-    // Round to nearest grid cell
-    x = Math.round(x / GRID_SIZE) * GRID_SIZE;
-    y = Math.round(y / GRID_SIZE) * GRID_SIZE;
+    const x = margin + Math.random() * (WORLD_WIDTH - margin * 2);
+    const y = margin + Math.random() * (WORLD_HEIGHT - margin * 2);
 
     const dx = x - playerPosition[0];
     const dy = y - playerPosition[1];
@@ -64,7 +54,5 @@ export function getRandomOrbPosition(playerPosition: [number, number]): [number,
   }
 
   // Fallback
-  const fx = Math.round((WORLD_WIDTH / 2) / GRID_SIZE) * GRID_SIZE;
-  const fy = Math.round((WORLD_HEIGHT / 4) / GRID_SIZE) * GRID_SIZE;
-  return [fx, fy];
+  return [WORLD_WIDTH / 2, WORLD_HEIGHT / 4];
 }

@@ -1,16 +1,17 @@
 export const WORLD_WIDTH = 1000;
 export const WORLD_HEIGHT = 700;
 
-export const GRID_SIZE = 20; // grid step size in pixels
+export const PLAYER_SPEED = 220.0; // Base speed in pixels per second
 
-export const BASE_FPS = 8.0; // starting speed in grid steps per second
+export const SEGMENT_SPACING = 14.0; // Distance between body segments in pixels
 
 export const COLLISION_RADII = {
   player: 10,
-  trail: 10,
-  orb: 10,
+  trail: 7.5,
+  orb: 12,
+  powerup: 12,
 };
 
-// Grace ticks: how many steps of the player's own path to exclude from self-collision checks.
-// 4 steps allows the head to move without colliding with its own immediate neck.
-export const SELF_COLLISION_GRACE_TICKS = 4;
+// Grace segments: how many segments near the head to exclude from self-collision checks.
+// Since segments drag continuously, we exclude the first 7 segments of the neck.
+export const SELF_COLLISION_GRACE_SEGMENTS = 7;

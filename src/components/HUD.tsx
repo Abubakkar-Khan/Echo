@@ -14,6 +14,8 @@ export function HUD() {
     startGame,
     pauseGame,
     resetGame,
+    hasShield,
+    slowMoTimeLeft,
   } = useGameStore();
 
   // Unlock browser audio context on first click or keypress
@@ -115,6 +117,26 @@ export function HUD() {
           </RoughBorder>
         )}
         
+        {/* Active Powerups Badges */}
+        {(gameState === 'PLAYING' || gameState === 'PAUSED') && (hasShield || slowMoTimeLeft > 0) && (
+          <div className="flex gap-3 items-center pointer-events-auto absolute left-1/2 -translate-x-1/2 top-8">
+            {hasShield && (
+              <RoughBorder fill="#e0f2fe" stroke="#00b4d8" strokeWidth={1.5} className="px-3.5 py-1.5 flex items-center gap-1.5 text-sky-700">
+                <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse" />
+                <span className="text-[10px] tracking-widest font-extrabold uppercase">SHIELD ACTIVE</span>
+              </RoughBorder>
+            )}
+            {slowMoTimeLeft > 0 && (
+              <RoughBorder fill="#f3e8ff" stroke="#7209b7" strokeWidth={1.5} className="px-3.5 py-1.5 flex items-center gap-1.5 text-purple-700">
+                <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+                <span className="text-[10px] tracking-widest font-extrabold uppercase font-sans">
+                  SLOW MO: {(slowMoTimeLeft / 60).toFixed(1)}s
+                </span>
+              </RoughBorder>
+            )}
+          </div>
+        )}
+        
         {/* Pause Badge */}
         {gameState === 'PAUSED' && (
           <RoughBorder fill="#fffbeb" stroke="#d97706" strokeWidth={1.5} className="px-4 py-1.5 pointer-events-auto">
@@ -150,9 +172,11 @@ export function HUD() {
               </div>
 
               <p className="text-sm text-neutral-650 leading-relaxed font-medium px-2">
-                Collect the rotating golden stars. Each star resets you to spawn and releases a colorful replay ghost that retraces your exact path!
+                Collect golden stars to trigger rewinds. Your past timelines slither alongside you in solid, vibrant colors!
                 <br />
-                <span className="text-[#0077b6] font-bold">★ Teleporting:</span> Going off any edge wraps you to the opposite side of the paper! Avoid crossing paths with your trail and previous ghosts.
+                <span className="text-[#0077b6] font-semibold">★ Softbody Physics:</span> Bends and curves organically.
+                <br />
+                <span className="text-emerald-600 font-semibold">★ Upgrades Spawning:</span> Collect **Shield** 🛡️, **Slow-Mo Clock** ⏱️, and **Ghost Eraser** 🧼 to wipe clutter. Wrapping across walls teleports you!
               </p>
 
               <button
