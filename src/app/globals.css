@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Patrick Hand', cursive;
+  
+  --animate-fade-in: fade-in 0.4s ease-out forwards;
+  --animate-scale-in: scale-in 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes scale-in {
+    from {
+      transform: scale(0.92);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+:root {
+  --background: #f7f4ea; /* Warm notebook paper background */
+  --foreground: #2d2a29; /* Soft charcoal pencil text color */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--background);
+  /* notebook graph paper grids */
+  background-image: 
+    linear-gradient(rgba(78, 122, 199, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(78, 122, 199, 0.12) 1px, transparent 1px);
+  background-size: 25px 25px;
+  color: var(--foreground);
+  font-family: 'Patrick Hand', cursive;
+}
+
+/* Notebook margins or paper lines if needed */
+.notebook-paper-texture {
+  box-shadow: 
+    2px 2px 0px rgba(0,0,0,0.05),
+    inset 0 0 40px rgba(0,0,0,0.02);
+}
